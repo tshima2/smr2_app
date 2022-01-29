@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/kazuomatz/activerecord-mysql2spatial-adapter.git
+  revision: 605cc2f408b425209795da31dc96456574ca4e61
+  branch: rails-6
+  specs:
+    activerecord-mysql2spatial-adapter (0.6.1.nonrelease)
+      mysql2 (~> 0.5)
+      rgeo-activerecord (~> 6.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -76,6 +85,10 @@ GEM
     concurrent-ruby (1.1.9)
     crass (1.0.6)
     diff-lcs (1.5.0)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     faker (2.19.0)
       i18n (>= 1.6, < 2)
@@ -146,6 +159,10 @@ GEM
       ffi (~> 1.0)
     regexp_parser (2.2.0)
     rexml (3.2.5)
+    rgeo (2.4.0)
+    rgeo-activerecord (6.2.2)
+      activerecord (>= 5.0)
+      rgeo (>= 1.0.0)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.2)
@@ -178,6 +195,7 @@ GEM
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
+    semantic_range (3.0.0)
     spring (2.1.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -208,10 +226,11 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (~> 4.0)
-    webpacker (4.3.0)
-      activesupport (>= 4.2)
+    webpacker (5.4.3)
+      activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
-      railties (>= 4.2)
+      railties (>= 5.2)
+      semantic_range (>= 2.3.0)
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -223,9 +242,11 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord-mysql2spatial-adapter!
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  dotenv-rails
   faker
   jbuilder (~> 2.7)
   listen (~> 3.2)
@@ -242,7 +263,7 @@ DEPENDENCIES
   tzinfo-data
   web-console (>= 3.3.0)
   webdrivers
-  webpacker (~> 4.0)
+  webpacker (~> 5.0)
 
 RUBY VERSION
    ruby 2.6.3p62

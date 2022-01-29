@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @site.title %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  北緯(<%= @site.geom.y.to_s %>)度&nbsp;/&nbsp;東経(<%= @site.geom.x.to_s %>)度
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @site.address %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @site.description %>
+</p>
+
+<!-- <%= link_to 'Edit', edit_site_path(@site) %> | -->
+<%= link_to 'Back', sites_path %>

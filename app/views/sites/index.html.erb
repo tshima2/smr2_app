@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<!--
+<p>jQuery動作テスト</p>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("p").text("成功！！");
+  });
+</script>
+-->
+<%= javascript_pack_tag 'sites/index' %>
+
+<h1>Sites</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Location</th>
+      <th>Address</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <div id="map_index" style="width: 600px; height: 300px;"></div>
+    <input name="arr_json_points" type="hidden" value="<%= @points %>" class="arr_json_points">
+        
+    <% @sites.each do |site| %>
+      <tr>
+        <td><%= site.title %></td>
+        <td><%= site.geom %></td>
+<!--        <td>lat:<%= site.geom.y %>&nbsp;/&nbsp;lon:<%= site.geom.x %></td>  -->
+        <td><%= site.address %></td>
+        <td><%= site.description %></td>
+        <td><%= link_to 'Show', site %></td>
+        <td><%#= link_to 'Edit', edit_site_path(site) %></td>
+        <td><%#= link_to 'Destroy', site, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%#= link_to 'New Site', new_site_path %>
