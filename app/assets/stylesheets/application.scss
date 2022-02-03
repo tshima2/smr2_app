@@ -1,0 +1,68 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+$fa-font-path: '@fortawesome/fontawesome-free/webfonts';
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import '@fortawesome/fontawesome-free/scss/solid';
+@import '@fortawesome/fontawesome-free/scss/regular';
+@import '@fortawesome/fontawesome-free/scss/brands';
+@import '@fortawesome/fontawesome-free/scss/v4-shims';
+
+html {
+    /*    font-size: 1rem;*/
+    /*    font-size: 1ff;*/
+    font-size: 12px;
+}
+
+.container_article {
+    margin: 10px;
+}
+
+.site_index_div_pointup {
+  display: block;
+  cursor: pointer;
+  width: 10px;
+  text-align: center;
+}
+
+#site_index_clickmenu {
+    margin: 0;
+    position: absolute;
+    min-width: 120px;
+    padding: 2px;
+    line-height: 12pt;
+    color: #000;
+    background-color: #eeeeee;
+    border: 1pt solid #666666;
+    box-shadow: 2px 2px 4px 0px #666666;
+    font-size: 9pt;
+    visibility: hidden;
+}
+#site_index_clickmenu a {
+    display: block;
+    padding: 2px 2px 2px 10px;
+    text-decoration: none;
+    color: #000;
+    cursor: default;
+}
+#site_index_clickmenu li {
+    border: 1px solid transparent;
+    list-style: none;
+}
+#site_index_clickmenu li:hover {
+    border: 1px solid #78aee5;
+    background-color: #d1e2f2;
+}

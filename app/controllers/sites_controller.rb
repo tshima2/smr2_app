@@ -1,33 +1,92 @@
+# coding: utf-8
 class SitesController < ApplicationController
+  before_action :set_site, only: [:show, :edit, :update, :destroy]
 
-  # GET /sites
+  # GET /sites                
   def index
     @sites = Site.all
 
-    #output site location(json) for googlemap
-    _points = []
-    @sites.each do |site|
-      _item = []
-      _item.push(site.title)
-      _item.push(site.geom.x)
-      _item.push(site.geom.y)
-      _item.push(site.address)
-      _item.push(site.description)
-      _item.push("<a href='" + site_path(site.id) + "'>" + site.title + "</a>")
-      _points.push(_item)
+    # output site location (hash -> json) for googlemap
+    # プルリク指摘の反映（map使用によるメモリ使用効率化）, いったん中間形式配列を生成してから to_hで受け渡し用hashに変換
+    ar_points = @sites.map do |site|
+      [site.id, [site.title, site.geom.x, site.geom.y, site.address, site.description, "<a href=\"" + site_path(site.id)  + "\">" + "<i class=\"fas fa-info-circle\"></i>" + "</a>&nbsp;", "<a href=\"" + edit_site_path(site.id) + "\">" + "<i class=\"fas fa-edit\"></i>"   + "</a>&nbsp;", "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete'" + " href='" + site_path(site.id) + "'>" + "<i class=\"fas fa-trash-alt\"></i>" + "</a>&nbsp;", site.id]]
     end
-    @points = _points.to_json
-
+    @points = ar_points.to_h.to_json
   end
 
   # GET /sites/1
   def show 
-    set_site
+  end
+  
+  # GET /sites/new
+  def new
+    @site = Site.new
+    if(params[:geom])
+      @site.geom = params[:geom]
+    end
   end
 
-private
+  # POST /sites/confirm
+  def confirm
+    @site = Site.new(site_params)
+  end
+
+  # GET /sites/1/edit
+  def edit
+  end
+
+  # POST /sites
+  def create
+    @site = Site.new(site_params)
+
+    if(@site.save)
+      flash[:notice] = "Site was successfully created."
+      redirect_to site_path(@site)
+    else
+      flash.now[:alert] = 'create site failed.';
+      render :new;
+    end
+  end
+
+  # PATCH/PUT /sites/1
+  def update
+    if @site.update(site_params)
+      flash[:notice] = "Site was successfully updated."      
+      redirect_to site_path(@site)
+    else
+      flash.now[:alert] = 'update site failed.';
+      render :edit;      
+    end
+  end
+
+  # DELETE /sites/1
+  def destroy
+    @site.destroy
+    flash[:notice] = "Site was successfully destroyed."          
+    redirect_to sites_url
+  end
+    
+  private
   def set_site
     @site = Site.find(params[:id])
   end
+  
+  def site_params
+    # viewから受け取るx, y(lat/lon)はモデルのプロパティではないため, geomプロパティに変更する
+    sp = params.require(:site)
+    if( !sp[:geom] )
+      sp[:geom] = Point.from_x_y( sp[:y], sp[:x] )
+      sp.delete(:x); sp.delete(:y)
+    end
+    sp.permit(:title, :geom, :address, :description)
+  end
+  
+  # Geometry型に緯度経度を設定するためのPointクラス
+  class Point
+    def self.from_x_y(x, y)
+      x.present? && y.present? ? "POINT(#{x} #{y})" : nil
+    end
+  end
 
 end
+
