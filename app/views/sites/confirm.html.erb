@@ -1,0 +1,29 @@
+
+<article class="container_article">
+  
+  <h3>New Site Confirm</h3>
+  <p id="notice"><%= notice %></p>  
+  <%= form_with(model: @site, local: true) do |form| %>
+  <%= form.hidden_field "title" %>
+  <%= form.hidden_field "geom" %>
+  <%= form.hidden_field "address" %>
+  <%= form.hidden_field "description" %>
+
+  <table>
+    <tr>
+      <td>Title:</td><td><%= @site.title %></td>
+    </tr>
+    <tr>  
+      <td>Geometry:</td><td><%= @site.geom %></td>
+    </tr>
+    <tr>    
+      <td>Address:</td><td><%= @site.address %></td>
+    </tr>
+    <tr>      
+      <td>Description:</td><td><%= @site.description %></td>    
+    </tr>
+  </table>
+  <%= form.submit %>
+<% end %>
+
+</article>
