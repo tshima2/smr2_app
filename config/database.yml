@@ -10,11 +10,12 @@
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
 default: &default
-  adapter: mysql2
+  #adapter: mysql2
+  adapter: mysql2spatial
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: root.MySQL8
+  password: <%= ENV["SMR2_APP_DATABASE_PASSWORD"] %>
   socket: /var/lib/mysql/mysql.sock
 
 development:

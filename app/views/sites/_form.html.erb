@@ -1,0 +1,44 @@
+<%= form_for(@site, url: choose_new_or_edit) do |form| %>
+
+  <% if @site.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@site.errors.count, "error") %> prohibited site from being saved:</h2>
+      <ul>
+        <% @site.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @site.present? %>
+    <input type="hidden" name="id" value="<%= @site.id %>">
+  <% end %>
+  
+  <table>
+    <tr>
+      <td align="legt"><%= form.label 'Title' %></td>
+      <td alien="left" ><%= form.text_field :title %></td>
+    </tr>
+    <tr>
+      <td align="left"><%= form.label 'Location' %></td>
+      <td alien="left">
+	lat：<%= text_field_tag("site[x]", (@site.geom ? @site.geom.y : ''), size:20) %>
+	lon：<%= text_field_tag("site[y]", (@site.geom ? @site.geom.x : ''), size:20) %>
+      </td>    
+    </tr>  
+    <tr>
+      <td align="left"><%= form.label 'Address' %></td>
+      <td><%= form.text_field :address %></td>    
+    </tr>
+    <tr>
+      <td align="left"><%= form.label 'Description' %></td>
+      <td><%= form.text_field :description %></td>    
+    </tr>
+
+  </table>
+
+  <%= form.submit %>
+  <p>
+  <%= link_to raw("<i class=\"fas fa-backward\"></i>&nbsp;Back"), sites_path %>
+<% end %>

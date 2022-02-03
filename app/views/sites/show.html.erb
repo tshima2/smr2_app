@@ -1,0 +1,26 @@
+<article class="container_article">
+<h1><i class="fas fa-info-circle"></i>&nbsp;Show Site</h1>  
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @site.title %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  lat:(<%= @site.geom.y.to_s %>)&nbsp;/&nbsp;lon:(<%= @site.geom.x.to_s %>)
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @site.address %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @site.description %>
+</p>
+
+<!-- <%= link_to 'Edit', edit_site_path(@site) %> | -->
+<%= link_to 'Back', sites_path %>

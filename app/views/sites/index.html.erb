@@ -1,0 +1,87 @@
+
+
+<!--
+<p>jQuery動作テスト</p>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("p").text("成功！！");
+  });
+</script>
+-->
+
+<%= javascript_pack_tag 'sites/index' %>
+
+<article class="container_article">
+  <h1><i class="fas fa-map-marker-alt"></i>&nbsp;Sites</h1>
+  <p id="notice"><%= notice %></p>
+
+  <div id="map_index" style="width: 600px; height: 300px;"></div>
+  <input name="ha_json_points" type="hidden" value="<%= @points %>" class="ha_json_points">
+
+  <div>
+    <ul id="site_index_clickmenu">
+      <li>
+        <div id="li_new-site_here">
+          <i class="fas fa-plus-square"></i>&nbsp;New-Site this point
+	</div>
+      </li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <%= link_to raw("<i class=\"fas fa-plus-square\"></i>&nbsp;New Site"), new_site_path %>
+  <!-- &nbsp;&nbsp;<a href="#"><i class="fas fa-file-csv"></i>&nbsp;Download CSV</a>-->
+
+<table class="table table-sm table-striped table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Location</th>
+      <th>Address</th>
+      <th>Description</th>
+      <th colspan="4">(Action)</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+    <% @sites.each do |site| %>
+    <tr>
+        <td><%= site.id %></td>      
+        <td><%= site.title %></td>
+        <td><%= site.geom %></td>
+<!--        <td>lat:<%= site.geom.y %>&nbsp;/&nbsp;lon:<%= site.geom.x %></td>  -->
+        <td><%= site.address %></td>
+        <td><%= site.description %></td>
+        <td><div class="site_index_div_pointup" siteid=<%= site.id %>><i class="far fa-hand-point-up"></i></div></td>	
+        <td><%= link_to raw("<i class=\"fas fa-info-circle\"></i>"), site %></td>
+        <td><%= link_to raw("<i class=\"fas fa-edit\"></i>"), edit_site_path(site) %></td>
+        <td><%= link_to raw("<i class=\"fas fa-trash-alt\"></i>"), site, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!--
+<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+--<
+
+</article>
