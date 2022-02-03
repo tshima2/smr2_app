@@ -37,3 +37,6 @@ yarn-debug.log*
 
 .env
 .gitignore
+
+# Ignore startup-script
+start_app
