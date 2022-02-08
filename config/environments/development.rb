@@ -36,6 +36,10 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  # for devise
+  config.action_mailer.default_url_options = { host: 'localhost', port:3000}
+  config.action_mailer.delivery_method = :letter_opener_web
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -62,5 +66,6 @@ Rails.application.configure do
 
   # Blocked host: 9afc610dd502423a9328bb4a2321aaff.vfs.cloud9.ap-northeast-1.amazonaws.com
   config.hosts << "9afc610dd502423a9328bb4a2321aaff.vfs.cloud9.ap-northeast-1.amazonaws.com"
+  
 end
 

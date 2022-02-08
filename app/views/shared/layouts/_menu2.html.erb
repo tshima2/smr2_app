@@ -1,0 +1,23 @@
+<!-- ナビゲーションバー start -->
+<div class="smr_nav">
+  <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+  <%= link_to "Site-Information Tool", root_path, class: "navbar-brand nav-link" %>      
+  <button class="navbar-toggler" type="button"
+          data-toggle="collapse"
+          data-target="#navmenu1"
+          aria-controls="navmenu1"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navmenu1">
+    <div class="navbar-nav">
+      <%= link_to "Site Index", sites_path, class: "nav-item nav-link", id: "link_site_index_navitem" %>      
+      <%= link_to "Sign Up", new_user_registration_path, class: "nav-item nav-link", id: "link_menu_signup" %>
+      <%= link_to "Log in", new_user_session_path, class: "nav-item nav-link", id: "link_menu_login" %>
+    </div>
+  </div>
+</nav>
+</div>
+<!-- ナビゲーションバー end -->

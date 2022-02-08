@@ -4,7 +4,7 @@ class SitesController < ApplicationController
 
   # GET /sites                
   def index
-    @sites = Site.all
+    @sites = current_user.sites.includes([:user])
 
     # output site location (hash -> json) for googlemap
     # プルリク指摘の反映（map使用によるメモリ使用効率化）, いったん中間形式配列を生成してから to_hで受け渡し用hashに変換
@@ -20,7 +20,7 @@ class SitesController < ApplicationController
   
   # GET /sites/new
   def new
-    @site = Site.new
+    @site = current_user.sites.build()
     if(params[:geom])
       @site.geom = params[:geom]
     end
@@ -37,14 +37,18 @@ class SitesController < ApplicationController
 
   # POST /sites
   def create
-    @site = Site.new(site_params)
+    @site = current_user.sites.build(site_params)
 
-    if(@site.save)
-      flash[:notice] = "Site was successfully created."
-      redirect_to site_path(@site)
+    if params[:back]
+      render :new
     else
-      flash.now[:alert] = 'create site failed.';
-      render :new;
+      if(@site.save)
+        flash[:notice] = "Site was successfully created."
+        redirect_to site_path(@site)
+      else
+        flash.now[:alert] = 'create site failed.';
+        render :new;
+      end
     end
   end
 

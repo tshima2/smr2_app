@@ -1,0 +1,7 @@
+<article class="container_article">
+  <h1>MyPage Top@<%= @user.name %></h1>
+  <h5 class="mt-2"><%= @user.name %>&nbsp;&lt;<%= @user.email %>&gt;</h5>
+  <% unless current_user.guest? %>
+    <%= link_to "edit profile", edit_user_path, class: 'btn btn-sm btn-info mt-3' %>
+  <% end %>
+</article>
