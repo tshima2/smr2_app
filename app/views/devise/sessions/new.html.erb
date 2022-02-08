@@ -1,0 +1,46 @@
+<article class="container_article">
+
+<h2>Log in</h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+<!--
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.password_field :name, autocomplete: "name" %>
+  </div>
+-->
+
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "current-password" %>
+  </div>
+
+  <div class="field">
+    <% if devise_mapping.rememberable? %>
+      <div class="field">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Log in", class: "btn btn-sm btn-info" %>
+  </div>
+<% end %>
+
+<div class="actions">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |g| %>
+    <%= g.hidden_field :email, value:"guest@smoothrunning.com" %>
+    <%= g.hidden_field :password, value:"__guest__" %>
+    <%= g.submit "guest_sign_in", class: "btn btn-sm btn-warning", id: "guest_user_login_submit" %>
+  <% end %>
+</div>
+
+<%= render "devise/shared/links" %>
+</article>

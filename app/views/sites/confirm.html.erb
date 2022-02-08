@@ -2,7 +2,6 @@
 <article class="container_article">
   
   <h3>New Site Confirm</h3>
-  <p id="notice"><%= notice %></p>  
   <%= form_with(model: @site, local: true) do |form| %>
   <%= form.hidden_field "title" %>
   <%= form.hidden_field "geom" %>
@@ -23,7 +22,7 @@
       <td>Description:</td><td><%= @site.description %></td>    
     </tr>
   </table>
-  <%= form.submit %>
+  <%= form.submit class:"btn btn-sm btn-info" %>
 <% end %>
 
 </article>

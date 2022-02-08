@@ -62,50 +62,53 @@ jQuery.initMap = function($, conf) {
     
     //draw points 
     if(points.length > 0){
-	var center1=0, center2=0, coord_count=0;
-	points.forEach(function (point, index) {
-	    var _title = point[0];
-	    var _x =  point[1];
-	    var _y =  point[2]
-	    var _address =  point[3];
-	    var _description =  point[4];
-	    var _show_link =  point[5];
-	    var _edit_link =  point[6];
-	    var _delete_link =  point[7];
-	    var _id = point[8];	    
-	    
-	    center1 += _x;
-	    center2 += _y;
-	    coord_count++;
-	    
-	    var myLatlng;
-	    var obj_marker;
-	    myLatlng = new google.maps.LatLng(_y, _x),
-	    obj_marker=new google.maps.Marker({
-		position: myLatlng,
-		title: String(_id),
-		animation: google.maps.Animation.DROP,
-		//icon: `map_icons/number_${index+1}.png`,
-		map: map
-	    });
-	    gHaDrawedMarkers[_id] = obj_marker;
-	    bounds.extend(myLatlng);
+		var center1=0, center2=0, coord_count=0;
+		points.forEach(function (point, index) {
+			var _title = point[0];
+			var _x =  point[1];
+			var _y =  point[2]
+			var _address =  point[3];
+			var _description =  point[4];
+			var _show_link =  point[5];
+			var _edit_link =  point[6];
+			var _delete_link =  point[7];
+			var _id = point[8];	    
+			
+			center1 += _x;
+			center2 += _y;
+			coord_count++;
+			
+			var myLatlng;
+			var obj_marker;
+			myLatlng = new google.maps.LatLng(_y, _x),
+			obj_marker=new google.maps.Marker({
+			position: myLatlng,
+			title: String(_id),
+			animation: google.maps.Animation.DROP,
+			//icon: `map_icons/number_${index+1}.png`,
+			map: map
+			});
+			gHaDrawedMarkers[_id] = obj_marker;
+			bounds.extend(myLatlng);
 
-	    google.maps.event.addListener(obj_marker, 'click', function() {
-		if (!gInfoWindow) {
-		    gInfoWindow = new google.maps.InfoWindow();
-		}
-		gInfoWindow.setContent('<h3>' + _title + '</h3>'+_show_link + _edit_link + _delete_link);			
-		gInfoWindow.open(map, obj_marker);
-	    });
+			google.maps.event.addListener(obj_marker, 'click', function() {
+			if (!gInfoWindow) {
+				gInfoWindow = new google.maps.InfoWindow();
+			}
+			gInfoWindow.setContent('<h3>' + _title + '</h3>'+_show_link + _edit_link + _delete_link);			
+			gInfoWindow.open(map, obj_marker);
+			});
 
-	});
-	center1 /= coord_count;
-	center2 /= coord_count;
-	map.setCenter(new google.maps.LatLng(center2, center1));
-	map.fitBounds(bounds);
+		});
+		center1 /= coord_count;
+		center2 /= coord_count;
+		map.setCenter(new google.maps.LatLng(center2, center1));
+		map.fitBounds(bounds);
     }
-
+	else{
+		map.setCenter(new google.maps.LatLng(35, 135));
+		map.setZoom(3);
+	}
     //map leftclick-events
     google.maps.event.addListener(map, 'click', function(event){
 	gClickLat = event.latLng.lat();
