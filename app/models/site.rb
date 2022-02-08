@@ -5,4 +5,5 @@ class Site < ApplicationRecord
   validates :description, length:{ maximum:1000 }
 
   belongs_to :user
+  belongs_to :team
 end

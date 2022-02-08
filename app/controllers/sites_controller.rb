@@ -1,10 +1,11 @@
 # coding: utf-8
 class SitesController < ApplicationController
+  before_action  :check_guest_user, only: [:new, :edit, :destroy]
   before_action :set_site, only: [:show, :edit, :update, :destroy]
 
   # GET /sites                
   def index
-    @sites = current_user.sites.includes([:user])
+    @sites = current_user.keep_team.sites.includes([:user])
 
     # output site location (hash -> json) for googlemap
     # プルリク指摘の反映（map使用によるメモリ使用効率化）, いったん中間形式配列を生成してから to_hで受け渡し用hashに変換
@@ -20,7 +21,7 @@ class SitesController < ApplicationController
   
   # GET /sites/new
   def new
-    @site = current_user.sites.build()
+    @site = current_user.sites.build(team_id: current_user.keep_team_id)
     if(params[:geom])
       @site.geom = params[:geom]
     end
@@ -33,11 +34,16 @@ class SitesController < ApplicationController
 
   # GET /sites/1/edit
   def edit
+    if !(site_creator_or_team_owner?)
+      flash[:alert]="Unauthorized Request."
+      redirect_to statics_top_path
+    end
   end
 
   # POST /sites
   def create
     @site = current_user.sites.build(site_params)
+    @site.team_id ||= current_user.keep_team_id
 
     if params[:back]
       render :new
@@ -65,10 +71,15 @@ class SitesController < ApplicationController
 
   # DELETE /sites/1
   def destroy
-    @site.destroy
-    flash[:notice] = "Site was successfully destroyed."          
-    redirect_to sites_url
-  end
+    if !(site_creator_or_team_owner?)
+      flash[:alert]="Unauthorized Request."
+      redirect_to statics_top_path
+    else
+      @site.destroy
+      flash[:notice] = "Site was successfully destroyed."          
+      redirect_to sites_url
+    end
+end
     
   private
   def set_site
@@ -82,7 +93,11 @@ class SitesController < ApplicationController
       sp[:geom] = Point.from_x_y( sp[:y], sp[:x] )
       sp.delete(:x); sp.delete(:y)
     end
-    sp.permit(:title, :geom, :address, :description)
+    sp.permit(:team_id, :title, :geom, :address, :description)
+  end
+
+  def site_creator_or_team_owner?
+    ((current_user.id == @site.user_id) || (current_user.id == @site.team.owner.id)) ? true : false
   end
   
   # Geometry型に緯度経度を設定するためのPointクラス

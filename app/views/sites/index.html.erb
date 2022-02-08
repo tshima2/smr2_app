@@ -12,7 +12,7 @@
 <%= javascript_pack_tag 'sites/index' %>
 
 <article class="container_article">
-  <h1><i class="fas fa-map-marker-alt"></i>&nbsp;My Sites</h1>
+  <h1><i class="fas fa-map-marker-alt"></i>&nbsp;Sites @ <%= current_user.keep_team.name %></h1>
 
   <div id="map_index" style="width: 600px; height: 300px;"></div>
   <input name="ha_json_points" type="hidden" value="<%= @points %>" class="ha_json_points">
