@@ -6,11 +6,22 @@ class SitesController < ApplicationController
   # GET /sites                
   def index
     @sites = current_user.keep_team.sites.includes([:user])
+    @sites = @sites.order(updated_at: :DESC).page(params[:page]).per(8)
 
     # output site location (hash -> json) for googlemap
     # プルリク指摘の反映（map使用によるメモリ使用効率化）, いったん中間形式配列を生成してから to_hで受け渡し用hashに変換
     ar_points = @sites.map do |site|
-      [site.id, [site.title, site.geom.x, site.geom.y, site.address, site.description, "<a href=\"" + site_path(site.id)  + "\">" + "<i class=\"fas fa-info-circle\"></i>" + "</a>&nbsp;", "<a href=\"" + edit_site_path(site.id) + "\">" + "<i class=\"fas fa-edit\"></i>"   + "</a>&nbsp;", "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete'" + " href='" + site_path(site.id) + "'>" + "<i class=\"fas fa-trash-alt\"></i>" + "</a>&nbsp;", site.id]]
+      [site.id, 
+        [site.title, 
+          site.geom.x, 
+          site.geom.y, 
+          site.address, 
+          site.description, 
+          "<a href=\"" + site_path(site.id)  + "\">" + "<i class=\"fas fa-info-circle\"></i>" + "</a>&nbsp;", 
+          current_user.guest? ? "" : "<a href=\"" + edit_site_path(site.id) + "\">" + "<i class=\"fas fa-edit\"></i>"   + "</a>&nbsp;", 
+          current_user.guest? ? "" : "<a data-confirm='Are you sure?' rel='nofollow' data-method='delete'" + " href='" + site_path(site.id) + "'>" + "<i class=\"fas fa-trash-alt\"></i>" + "</a>&nbsp;", 
+          site.id]
+        ]
     end
     @points = ar_points.to_h.to_json
   end

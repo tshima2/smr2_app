@@ -4,4 +4,6 @@
   <% unless current_user.guest? %>
     <%= link_to "edit profile", edit_user_path, class: 'btn btn-sm btn-info mt-3' %>
   <% end %>
+  <p>
+  <%= link_to "Go to Site Index", sites_path %>
 </article>
