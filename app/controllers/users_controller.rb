@@ -17,12 +17,22 @@ class UsersController < ApplicationController
         end
     end
 
+    def change
+        @user = current_user
+        if params[:team_id].to_i != @user.keep_team_id
+            @user.keep_team_id = params[:team_id]
+            @user.save
+            flash[:notice]="change current-group completed successfully."
+        end 
+        redirect_to user_path
+    end
+
     def show 
         @user = current_user
     end
 
     private
     def user_params
-        params.require(:user).permit(:email, :password, :password_confirmation, :icon, :icon_cache, :name)
+        params.require(:user).permit(:email, :password, :password_confirmation, :name, :keep_team_id)
     end
 end

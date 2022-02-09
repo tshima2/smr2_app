@@ -13,8 +13,31 @@
 
   <div class="collapse navbar-collapse" id="navmenu1">
     <div class="navbar-nav">
-      <%= link_to "Site Index", sites_path, class: "nav-item nav-link", id: "link_site_index_navitem" %>
+      <div class="dropdown">
+        <a class="nav-item nav-link dropdown-toggle" data-toggle="dropdown" id="link_myteam_dropdown">MyGroups</a>
+        <div class="dropdown-menu">
+          <% (current_user.teams.blank? ? Team.where(id: 1): current_user.teams.order(id: :asc)).each do |team| %>
+	    
+            <% if current_user.keep_team_id == team.id %>
+              <div class="dropdown-item">                
+                <span class="fa-div"><i class="fas fa-check-square fa-lg"></i></span>
+                <%#= link_to team.name, change_user_path(team_id: team.id) %>
+                <%= team.name %>
+              </div>
+            <% else %>                            
+              <div class="dropdown-item">
+                <span class="fa-div"><i class="far fa-square fa-lg"></i></span>
+                <%= link_to team.name, change_user_path(team_id: team.id) %>	      
+              </div>
+            <% end %>
+
+          <% end %>
+      	  <%#= link_to 'link_menu_new_team', new_team_path, class: "dropdown-item" %>	  	    
+        </div>
+      </div>
+
       <%= link_to "MyPage", user_path, class: "nav-item nav-link" %>
+      <%= link_to "Site Index", sites_path, class: "nav-item nav-link", id: "link_site_index_navitem" %>
       <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-item nav-link", id: "link_menu_logout" %>
     </div>
   </div>
