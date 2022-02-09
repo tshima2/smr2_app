@@ -30,17 +30,26 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Log in", class: "btn btn-sm btn-info" %>
+    <%= f.submit "Log in", class: "btn btn-sm btn-primary" %>
   </div>
 <% end %>
 
+<p>
+<div class="actions">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |g| %>
+    <%= g.hidden_field :email, value:"user01@smoothrunning.com" %>
+    <%= g.hidden_field :password, value:"user01" %>
+    <%= g.submit "Log in As Sample-User (ReadWrite)", class: "btn btn-sm btn-secondary", id: "sample_user_login_submit" %>
+  <% end %>
+</div>
 <div class="actions">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |g| %>
     <%= g.hidden_field :email, value:"guest@smoothrunning.com" %>
     <%= g.hidden_field :password, value:"__guest__" %>
-    <%= g.submit "guest_sign_in", class: "btn btn-sm btn-warning", id: "guest_user_login_submit" %>
+    <%= g.submit "Log in As Guest-User (ReadOnly)", class: "btn btn-sm btn-warning", id: "guest_user_login_submit" %>
   <% end %>
 </div>
 
+<p>
 <%= render "devise/shared/links" %>
 </article>

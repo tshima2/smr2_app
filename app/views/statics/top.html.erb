@@ -1,3 +1,10 @@
 <article class="container_article">
   <h1>Site-Information Tool TopPage</h1>
+  <% if user_signed_in? %>
+    <%= link_to "Go to Site Index", sites_path %>
+  <% else %>
+    Please <%= link_to "Log in", user_session_path %>, and share your memorial placements.
+  <% end %>
+<p>
+  <%= image_tag '17127.jpg', width: "50%" %>
 </article>
