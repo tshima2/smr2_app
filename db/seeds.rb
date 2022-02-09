@@ -21,10 +21,13 @@ user_guest=User.create!(name: _name, email: _email, password: _pass, guest: _gue
 # create Team
 _name = "DefaultGroup"
 team_01=Team.create!(name: _name, owner_id: user_sys.id)
+_name = "User01Group"
+team_02=Team.create!(name: _name, owner_id: user_01.id)
 
 # create Assign
 Assign.create!(user_id: user_sys.id, team_id: team_01.id)
 Assign.create!(user_id: user_01.id, team_id: team_01.id)
+Assign.create!(user_id: user_01.id, team_id: team_02.id)
 Assign.create!(user_id: user_02.id, team_id: team_01.id)
 Assign.create!(user_id: user_03.id, team_id: team_01.id)
 Assign.create!(user_id: user_guest.id, team_id: team_01.id)
@@ -84,9 +87,27 @@ site.save!
 site = Site.new
 site.user_id = user_02.id
 site.team_id = team_01.id
+site.title = '福岡駅'
+site.address = '福岡市'
+site.geom = Point.from_x_y( 130.42043374,  33.58985702)
+site.description = Faker::Lorem.sentence
+site.save!
+
+site = Site.new
+site.user_id = user_01.id
+site.team_id = team_02.id
 site.title = '富士山'
 site.address = '御殿場市'
 site.geom = Point.from_x_y( 138.72734785,  35.36063614)
+site.description = Faker::Lorem.sentence
+site.save!
+
+site = Site.new
+site.user_id = user_01.id
+site.team_id = team_02.id
+site.title = '剱岳'
+site.address = '中部山岳国立公園内'
+site.geom = Point.from_x_y( 137.61732101,  36.62351875)
 site.description = Faker::Lorem.sentence
 site.save!
 
