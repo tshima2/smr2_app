@@ -13,6 +13,8 @@ _name = Faker::Name.name ; _email= "user01@smoothrunning.com"; _pass="user01"; _
 user_01=User.create!(name: _name, email: _email, password: _pass, guest: _guest, keep_team_id: _keep_team_id)
 _name = Faker::Name.name ; _email= "user02@smoothrunning.com"; _pass="user02"; _guest = false; _keep_team_id=1
 user_02=User.create!(name: _name, email: _email, password: _pass, guest: _guest, keep_team_id: _keep_team_id)
+_name = Faker::Name.name ; _email= "user03@smoothrunning.com"; _pass="__guest__"; _guest = true; _keep_team_id=1
+user_03=User.create!(name: _name, email: _email, password: _pass, guest: _guest, keep_team_id: _keep_team_id)
 _name = Faker::Name.name ; _email= "guest@smoothrunning.com"; _pass="__guest__"; _guest = true; _keep_team_id=1
 user_guest=User.create!(name: _name, email: _email, password: _pass, guest: _guest, keep_team_id: _keep_team_id)
 
@@ -24,6 +26,7 @@ team_01=Team.create!(name: _name, owner_id: user_sys.id)
 Assign.create!(user_id: user_sys.id, team_id: team_01.id)
 Assign.create!(user_id: user_01.id, team_id: team_01.id)
 Assign.create!(user_id: user_02.id, team_id: team_01.id)
+Assign.create!(user_id: user_03.id, team_id: team_01.id)
 Assign.create!(user_id: user_guest.id, team_id: team_01.id)
 
 # Geometry型に緯度経度を設定するためのPointクラス
@@ -86,3 +89,20 @@ site.address = '御殿場市'
 site.geom = Point.from_x_y( 138.72734785,  35.36063614)
 site.description = Faker::Lorem.sentence
 site.save!
+
+require "csv"
+comments_header=[
+    "男性トイレ総数","男性トイレ数（小便器）","男性トイレ数（和式）","男性トイレ数（洋式）","女性トイレ総数",
+    "女性トイレ数（和式）","女性トイレ数（洋式）","男女共用トイレ総数","男女共用トイレ数（和式）","男女共用トイレ数（洋式）",
+    "多機能トイレ","車椅子使用者用トイレ有無","乳幼児用設備設置トイレ有無","オストメイト設置トイレ有無","利用開始時間",
+    "利用終了時間","利用可能時間特記事項","画像","画像_ライセンス","URL"]
+CSV.foreach('db/131130_public_toilet.csv', headers: true) do |row|
+  _site = user_03.sites.build(team_id: team_01.id, 
+                                title: row["名称"], 
+                                address: row["住所"], 
+                                #description: row["URL"],
+                                description: Faker::Lorem.paragraph,
+                                geom: Point.from_x_y(row["経度"], row["緯度"])
+  )
+  _site.save!
+end
