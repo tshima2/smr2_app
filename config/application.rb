@@ -24,5 +24,8 @@ module Smr2App
     config.generators.helper_specs        = false
     config.generators.view_specs          = false
     config.generators.controller_specs    = false
-  end 
+
+    #config.active_record.default_timezone = :local
+    config.time_zone = 'Tokyo'
+    end 
 end
