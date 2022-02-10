@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     collection do
       post :confirm
     end
+    resources :image_posts, shallow: true
   end
 
   if Rails.env.development?

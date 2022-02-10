@@ -158,4 +158,3 @@ jQuery.initMap = function($, conf) {
     });
     
 }
-

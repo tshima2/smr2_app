@@ -28,6 +28,7 @@ class SitesController < ApplicationController
 
   # GET /sites/1
   def show 
+    @image_posts = @site.image_posts
   end
   
   # GET /sites/new
