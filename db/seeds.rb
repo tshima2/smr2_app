@@ -27,10 +27,11 @@ team_02=Team.create!(name: _name, owner_id: user_01.id)
 # create Assign
 Assign.create!(user_id: user_sys.id, team_id: team_01.id)
 Assign.create!(user_id: user_01.id, team_id: team_01.id)
-Assign.create!(user_id: user_01.id, team_id: team_02.id)
 Assign.create!(user_id: user_02.id, team_id: team_01.id)
 Assign.create!(user_id: user_03.id, team_id: team_01.id)
 Assign.create!(user_id: user_guest.id, team_id: team_01.id)
+Assign.create!(user_id: user_01.id, team_id: team_02.id)
+Assign.create!(user_id: user_02.id, team_id: team_02.id)
 
 # Geometry型に緯度経度を設定するためのPointクラス
 class Point
@@ -136,12 +137,12 @@ end
 team_01.sites.each do |site|
     ImagePost.create!(
         image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..7)}.jpg"), 
-        user_id: rand(user_01.id..user_02.id), 
+        user_id: rand(user_01.id..user_03.id), 
         site_id: site.id
     )
 end
 
 ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_01.id, site_id: team_02.sites.first.id)
-ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_01.id, site_id: team_02.sites.second.id)
+ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_02.id, site_id: team_02.sites.second.id)
 ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_01.id, site_id: team_02.sites.first.id)
-ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_01.id, site_id: team_02.sites.second.id)
+ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_02.id, site_id: team_02.sites.second.id)
