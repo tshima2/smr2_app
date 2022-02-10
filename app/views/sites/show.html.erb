@@ -1,30 +1,126 @@
+<%#= javascript_pack_tag 'sites/show' %>
+<script language="javascript" type="text/javascript">
+  function OnLinkClick2(){
+    let divTag = document.getElementById('request_url');
+    let sUrl=divTag.textContent;
+    navigator.clipboard.writeText(sUrl);
+    alert('copied this site URL to clipboard.');
+  };
+</script>
+
 <article class="container_article">
-<h1><i class="fas fa-info-circle"></i>&nbsp;Show Site</h1>  
+  <h1>Show Site</h1>  
+  
+  <div class="container-fluid">
 
-<p>
-  <strong>Title:</strong>
-  <%= @site.title %>
-</p>
+  <h4 class="font-weight-bold">
+    <i class="fas fa-info-circle"></i>&nbsp;basic info
+  </h4>
+  <a name="basics"></a>
+  <section class="site_show_basic_block border border-info">
+      <table>
+        <tr>
+          <td align="right"><div class="font-weight-bold">id：&nbsp;</div></td>
+          <td><div class="site_show_basic_item"><%= @site.id %></div></td>
+        </tr>
 
-<p>
-  <strong>Location:</strong>
-  lat:(<%= @site.geom.y.to_s %>)&nbsp;/&nbsp;lon:(<%= @site.geom.x.to_s %>)
-</p>
+        <tr>
+          <td align="right">
+            <div class="font-weight-bold">url：</div>
+          </td>
+          <td>
+            <div class="site_show_basic_item">
+              <div id="request_url"><%= request.url %></div>
+            </div>
+            <!-- <a href="javascript:OnLinkClick2();"><i class="fa fa-clipboard fa-lg" aria-hidden="true"></i></a>-->
+          </td>
+        </tr>
 
-<p>
-  <strong>Address:</strong>
-  <%= @site.address %>
-</p>
+        <tr>
+          <td align="right"><div class="font-weight-bold">title：&nbsp;</div></td>
+          <td><div class="site_show_basic_item"><%= @site.title %></div></td>
+        </tr>
 
-<p>
-  <strong>Description:</strong>
-  <%= @site.description %>
-</p>
+        <tr>
+          <td align="right"><div class="font-weight-bold">location：&nbsp;</div></td>
+          <td><div class="site_show_basic_item">lat:(<%= @site.geom.y.to_s %>)&nbsp;/&nbsp;lon:(<%= @site.geom.x.to_s %>)</div></td>
+        </tr>
 
-<p>
-  <strong>CreatedBy:</strong>
-  <%= @site.user.name %>
-</p>
+        <tr>
+          <td align="right"><div class="font-weight-bold">address：&nbsp;</div></td>
+          <td><div class="site_show_basic_item"><%= @site.address %></div></td>
+        </tr>
 
-<!-- <%= link_to 'Edit', edit_site_path(@site) %> | -->
-<%= link_to 'Back', sites_path %>
+        <tr>
+          <td align="right"><div class="font-weight-bold">description：&nbsp;</div></td>
+          <td><div class="site_show_basic_item"><%= @site.description %></div></td>
+        </tr>
+
+      </table>
+    </section>
+
+    <h4 class="font-weight-bold">
+      <i class="fas fa-image"></i>&nbsp;images
+    </h4>
+    <a name="images"></a>
+    <section class="site_show_image_block">
+      <div class="row">
+        <% @image_posts.each do |post| %>
+          <div class="col-auto">
+            <div class="site_show_menu_on_image m-1 p-1">
+              <%= link_to post.image_url, "data-lightbox": post.image_url do %>
+                <%= image_tag(post.image_url, class:"site_show_image", alt: "#{File.basename(post.image.path, '.*')}" ) %>
+              <% end %>
+              <% if (current_user.id == post.user_id) || (current_user.id == current_user.keep_team.owner_id) %>
+                <div class="site_show_menu">
+                  <%= link_to '×', image_post_path(id: post.id), method: :delete, data: {confirm: I18n.t('views.messages.really_want_to_delete') } %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>      
+
+      <div class="row">
+        <div class="col-auto">
+          <% if @image_posts.length < POSTMAXSIZE::IMAGEPOST %>
+            <%= link_to "Add image", new_site_image_post_path(@site.id) , class: "btn btn-sm btn-info" %>
+          <% end %>
+        </div>
+        <div class="col-auto">
+          <%= link_to "Back to Site-Index", sites_path %>  
+        </div>
+      </div>                  
+    
+    </section>
+<!--  
+  <p>
+    <strong>Title:</strong>
+    <%= @site.title %>
+  </p>
+
+  <p>
+    <strong>Location:</strong>
+    lat:(<%= @site.geom.y.to_s %>)&nbsp;/&nbsp;lon:(<%= @site.geom.x.to_s %>)
+  </p>
+
+  <p>
+    <strong>Address:</strong>
+    <%= @site.address %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= @site.description %>
+  </p>
+
+  <p>
+    <strong>CreatedBy:</strong>
+    <%= @site.user.name %>
+  </p>
+-->
+
+  </div>
+    <!-- .container_fluid -->
+
+</article>

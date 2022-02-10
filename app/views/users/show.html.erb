@@ -1,9 +1,28 @@
 <article class="container_article">
   <h1>MyPage Top</h1>
-  <h5 class="mt-2"><%= @user.name %>&nbsp;&lt;<%= @user.email %>&gt;&nbsp; / <%= current_user.keep_team.name %></h5>
+  <div>
+    <h5 class="mt-2">[Name]</h5>&nbsp;<%= @user.name %>
+    <h5 class="mt-2">[Email]</h5>&nbsp;<%= @user.email %>
+    <h5 class="mt-2">[Groups]</h5>
+    <ul>
+      <% @user.teams.each do |group| %>
+        <li><%= group.name %>  
+            <% if group.id == @user.keep_team.id %>
+              <span class="badge badge-success">current</span>
+            <% end %>
+            <% if group.owner_id == @user.id %>
+              <span class="badge badge-primary">owner</span>
+            <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <hr>
+
   <% unless current_user.guest? %>
     <%= link_to "edit profile", edit_user_path, class: 'btn btn-sm btn-info mt-3' %>
   <% end %>
   <p>
   <%= link_to "Go to Site Index", sites_path %>
+
 </article>
