@@ -63,21 +63,28 @@
       <i class="fas fa-image"></i>&nbsp;images
     </h4>
     <a name="images"></a>
-    <section class="site_show_image_block">
+    <section class="site_show_image_block border border-info">
       <div class="row">
+  
         <% @image_posts.each do |post| %>
+
           <div class="col-auto">
-            <div class="site_show_menu_on_image m-1 p-1">
-              <%= link_to post.image_url, "data-lightbox": post.image_url do %>
-                <%= image_tag(post.image_url, class:"site_show_image", alt: "#{File.basename(post.image.path, '.*')}" ) %>
-              <% end %>
-              <% if (current_user.id == post.user_id) || (current_user.id == current_user.keep_team.owner_id) %>
-                <div class="site_show_menu">
-                  <%= link_to '×', image_post_path(id: post.id), method: :delete, data: {confirm: I18n.t('views.messages.really_want_to_delete') } %>
-                </div>
-              <% end %>
+
+            <div class="card" style="width:15rem;">
+              <%= image_tag(post.image_url, class:"card-img-top", alt: "Card image cap" ) %>
+              <div class="card-body">
+                <h5 class="card-title"><%= post.user.name %></h5>
+                <h6 class="card-subtitle text-muted">[Posted At <%= l post.created_at, format: :short %>]</h6>
+                <p class="card-text"><%= File.basename(post.image.path, '.*') %></p>
+                <%= link_to raw("<i class=\"far fa-eye fa-lg\"></i>"), post.image_url, class: "card-link btn btn-sm btn-info" %>
+                <% if (current_user.id == post.user_id) || (current_user.id == current_user.keep_team.owner_id) %>
+                  <%= link_to raw("<i class=\"fas fa-trash-alt\"></i>"), image_post_path(id: post.id), method: :delete, class: "card-link btn btn-sm btn-danger", data: { confirm: 'Are you sure?' } %>
+                <% end %>
+              </div>
             </div>
+
           </div>
+
         <% end %>
       </div>      
 

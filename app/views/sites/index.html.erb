@@ -66,12 +66,14 @@
         <td><div class="site_index_div_pointup" siteid=<%= site.id %>><i class="far fa-hand-point-up fa-lg"></i></div></td>	
         <td><%= link_to raw("<i class=\"fas fa-info-circle\"></i>"), site, class: "btn btn-sm btn-info" %></td>
         <td>
-          <% unless current_user.guest? %>
+          <%# unless current_user.guest? %>
+          <% if (current_user.id == site.user_id) || (current_user.id == current_user.keep_team.owner_id) %>
             <%= link_to raw("<i class=\"fas fa-edit\"></i>"), edit_site_path(site), class: "btn btn-sm btn-secondary" %>
           <% end %>
         </td>
         <td>
-          <% unless current_user.guest? %>
+          <%# unless current_user.guest? %>
+          <% if (current_user.id == site.user_id) || (current_user.id == current_user.keep_team.owner_id) %>
             <%= link_to raw("<i class=\"fas fa-trash-alt\"></i>"), site, method: :delete, class: "btn btn-sm btn-danger", data: { confirm: 'Are you sure?' } %>
           <% end %>
         </td>

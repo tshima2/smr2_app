@@ -27,10 +27,11 @@ team_02=Team.create!(name: _name, owner_id: user_01.id)
 # create Assign
 Assign.create!(user_id: user_sys.id, team_id: team_01.id)
 Assign.create!(user_id: user_01.id, team_id: team_01.id)
-Assign.create!(user_id: user_01.id, team_id: team_02.id)
 Assign.create!(user_id: user_02.id, team_id: team_01.id)
 Assign.create!(user_id: user_03.id, team_id: team_01.id)
 Assign.create!(user_id: user_guest.id, team_id: team_01.id)
+Assign.create!(user_id: user_01.id, team_id: team_02.id)
+Assign.create!(user_id: user_02.id, team_id: team_02.id)
 
 # Geometry型に緯度経度を設定するためのPointクラス
 class Point
@@ -76,7 +77,7 @@ site.description = Faker::Lorem.sentence
 site01 = site.save!
 
 site = Site.new
-site.user_id = user_01.id
+site.user_id = user_02.id
 site.team_id = team_01.id
 site.title = '名古屋駅'
 site.address = '名古屋市'
@@ -107,7 +108,7 @@ EOS
 site01.save!
 
 site02 = Site.new
-site02.user_id = user_01.id
+site02.user_id = user_02.id
 site02.team_id = team_02.id
 site02.title = '剱岳'
 site02.address = '中部山岳国立公園内'
@@ -122,7 +123,8 @@ comments_header=[
     "多機能トイレ","車椅子使用者用トイレ有無","乳幼児用設備設置トイレ有無","オストメイト設置トイレ有無","利用開始時間",
     "利用終了時間","利用可能時間特記事項","画像","画像_ライセンス","URL"]
 CSV.foreach('db/131130_public_toilet.csv', headers: true) do |row|
-  _site = user_03.sites.build(team_id: team_01.id, 
+  _user = User.find(rand(user_01.id..user_03.id))
+  _site = _user.sites.build(team_id: team_01.id, 
                                 title: row["名称"], 
                                 address: row["住所"], 
                                 #description: row["URL"],
@@ -136,12 +138,12 @@ end
 team_01.sites.each do |site|
     ImagePost.create!(
         image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..7)}.jpg"), 
-        user_id: rand(user_01.id..user_02.id), 
+        user_id: rand(user_01.id..user_03.id), 
         site_id: site.id
     )
 end
 
 ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_01.id, site_id: team_02.sites.first.id)
-ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_01.id, site_id: team_02.sites.second.id)
+ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_02.id, site_id: team_02.sites.second.id)
 ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_01.id, site_id: team_02.sites.first.id)
-ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_01.id, site_id: team_02.sites.second.id)
+ImagePost.create!(image: File.open("#{Rails.root.to_s}/public/images_for_seed/#{rand(1..6)}.png"), user_id: user_02.id, site_id: team_02.sites.second.id)
