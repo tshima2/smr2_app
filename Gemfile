@@ -45,7 +45,7 @@ group :development, :test do
   # Adds RSpec
   gem 'rspec-rails'
   gem 'spring-commands-rspec'
-  gem 'faker'
+  #gem 'faker'
 end
 
 group :development do
@@ -75,6 +75,8 @@ gem 'dotenv-rails'
 gem 'kaminari'
 gem 'bootstrap4-kaminari-views'
 gem 'rinku'
+
+gem 'faker'
 
 # image upload
 gem 'carrierwave'
