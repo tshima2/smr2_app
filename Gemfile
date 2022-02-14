@@ -75,9 +75,11 @@ gem 'dotenv-rails'
 gem 'kaminari'
 gem 'bootstrap4-kaminari-views'
 gem 'rinku'
-
 gem 'faker'
 
 # image upload
 gem 'carrierwave'
 gem 'mini_magick'
+
+# use unicorn as the app server
+gem 'unicorn'
