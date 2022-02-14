@@ -14,7 +14,8 @@ default: &default
   adapter: mysql2spatial
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
+  host: <%= ENV['SMR2_APP_DATABASE_HOST'] %>  
+  username: smr2_app
   password: <%= ENV["SMR2_APP_DATABASE_PASSWORD"] %>
   socket: /var/lib/mysql/mysql.sock
 
@@ -51,5 +52,3 @@ test:
 production:
   <<: *default
   database: smr2_app_production
-  username: smr2_app
-  password: <%= ENV['SMR2_APP_DATABASE_PASSWORD'] %>
