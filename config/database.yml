@@ -15,7 +15,7 @@ default: &default
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: <%= ENV['SMR2_APP_DATABASE_HOST'] %>  
-  username: smr2_app
+  username: <%= ENV['SMR2_APP_DATABASE_USER'] %>
   password: <%= ENV["SMR2_APP_DATABASE_PASSWORD"] %>
   socket: /var/lib/mysql/mysql.sock
 
