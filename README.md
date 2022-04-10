@@ -18,7 +18,7 @@ https://smooth-running2.org
 - 現場情報をグループ内で共有し、コメントや画像の追加
 
 # 利用技術 #
-- (backend) Ruby 2.7.5, Rails 6.0.4, AmazonRDS（MySQL）
+- (backend) Ruby 2.7.5, Rails 6.0.4, AmazonRDS（MySQL）, Nginx, Unicorn
 - (front) jQuery, GoogleMapAPI
 
 # デプロイ先
